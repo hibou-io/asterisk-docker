@@ -1,0 +1,40 @@
+FROM debian:jessie
+MAINTAINER Hibou Corp. <hello@hibou.io>
+
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get clean && apt-get update \
+    && apt-get install -y \
+        build-essential \
+        openssl \
+        libxml2-dev \
+        libncurses5-dev \
+        uuid-dev \
+        sqlite3 \
+        libsqlite3-dev \
+        pkg-config \
+        libjansson-dev \
+        libssl-dev \
+        curl
+
+ENV SRTP_VERSION 1.4.4
+RUN cd /tmp \
+    && curl -o srtp.tgz http://kent.dl.sourceforge.net/project/srtp/srtp/${SRTP_VERSION}/srtp-${SRTP_VERSION}.tgz \
+    && tar xzf srtp.tgz
+RUN cd /tmp/srtp* \
+    && ./configure CFLAGS=-fPIC \
+    && make \
+    && make install
+
+
+ENV ASTERISK_VERSION 13.15.0
+RUN cd /tmp && curl -o asterisk.tar.gz http://downloads.asterisk.org/pub/telephony/asterisk/releases/asterisk-${ASTERISK_VERSION}.tar.gz \
+    && tar xzf asterisk.tar.gz
+RUN cd /tmp/asterisk* \
+    && ./configure --with-pjproject-bundled --with-crypto --with-ssl \
+    && make \
+    && make install \
+    && make samples \
+    && make config
+
+CMD asterisk -fvvv
