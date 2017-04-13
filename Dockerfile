@@ -27,7 +27,7 @@ RUN cd /tmp/srtp* \
     && make install
 
 
-ENV ASTERISK_VERSION 13.15.0
+ENV ASTERISK_VERSION 14.4.0
 RUN cd /tmp && curl -o asterisk.tar.gz http://downloads.asterisk.org/pub/telephony/asterisk/releases/asterisk-${ASTERISK_VERSION}.tar.gz \
     && tar xzf asterisk.tar.gz
 RUN cd /tmp/asterisk* \
