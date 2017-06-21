@@ -3,7 +3,7 @@ MAINTAINER Hibou Corp. <hello@hibou.io>
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get clean && apt-get update \
+RUN apt-get update \
     && apt-get install -y \
         build-essential \
         openssl \
@@ -31,7 +31,7 @@ RUN cd /tmp/srtp* \
     && make install
 
 
-ENV ASTERISK_VERSION 13.16.0
+ENV ASTERISK_VERSION 13.15.0
 RUN cd /tmp && curl -o asterisk.tar.gz http://downloads.asterisk.org/pub/telephony/asterisk/releases/asterisk-${ASTERISK_VERSION}.tar.gz \
     && tar xzf asterisk.tar.gz
 RUN cd /tmp/asterisk* \
