@@ -15,7 +15,11 @@ RUN apt-get clean && apt-get update \
         pkg-config \
         libjansson-dev \
         libssl-dev \
-        curl
+        curl \
+        msmtp
+
+# Asterisk expects /usr/sbin/sendmail
+RUN ln -s /usr/bin/msmtp /usr/sbin/sendmail
 
 ENV SRTP_VERSION 1.4.4
 RUN cd /tmp \
