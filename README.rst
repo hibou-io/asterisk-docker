@@ -82,6 +82,17 @@ You can create a configuration file for msmtp like the following.::
     user pbx@your.domain
     password yoursecretpassword
 
+Voicemail
+=========
+
+This image also includes the voicemail MP3 conversion script from https://gist.github.com/dougbtv/3d820a597347396a6e8d
+
+To attach voicemails as MP3 files, make the following changes to your voicemail.conf:
+
+    format=wav
+    mailcmd=/usr/sbin/sendmailmp3
+
+
 Customization
 =============
 

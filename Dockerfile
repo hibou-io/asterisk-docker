@@ -16,10 +16,15 @@ RUN apt-get update \
         libjansson-dev \
         libssl-dev \
         curl \
-        msmtp
+        msmtp \
+	dos2unix \
+	lame
 
 # Asterisk expects /usr/sbin/sendmail
 RUN ln -s /usr/bin/msmtp /usr/sbin/sendmail
+
+COPY sendmailmp3 /usr/sbin/sendmailmp3
+RUN chmod 755 /usr/sbin/sendmailmp3
 
 ENV SRTP_VERSION 1.4.4
 RUN cd /tmp \
