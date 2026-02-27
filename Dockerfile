@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM debian:trixie
 MAINTAINER Hibou Corp. <hello@hibou.io>
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -16,22 +16,16 @@ RUN apt-get update \
         libjansson-dev \
         libssl-dev \
         curl \
+        git \
+        pkg-config \
+        libsrtp2-dev \
+        libedit-dev \
         msmtp
 
 # Asterisk expects /usr/sbin/sendmail
 RUN ln -s /usr/bin/msmtp /usr/sbin/sendmail
 
-ENV SRTP_VERSION 1.4.4
-RUN cd /tmp \
-    && curl -o srtp.tgz http://kent.dl.sourceforge.net/project/srtp/srtp/${SRTP_VERSION}/srtp-${SRTP_VERSION}.tgz \
-    && tar xzf srtp.tgz
-RUN cd /tmp/srtp* \
-    && ./configure CFLAGS=-fPIC \
-    && make \
-    && make install
-
-
-ENV ASTERISK_VERSION 14.5.0
+ENV ASTERISK_VERSION 23.2.2
 RUN cd /tmp && curl -o asterisk.tar.gz http://downloads.asterisk.org/pub/telephony/asterisk/releases/asterisk-${ASTERISK_VERSION}.tar.gz \
     && tar xzf asterisk.tar.gz
 RUN cd /tmp/asterisk* \
